@@ -4,6 +4,9 @@
 
 Integrantes 
 Sebastian Villalobos
+
 Aarón Bustos
+
 Marcel Zapata
+
 Monserrath Jimenez
