@@ -50,9 +50,7 @@ public class ListaES {
     public void desactivarUsuario(String usuario) {
         //JOptionPane.showMessageDialog(null, usuario);
         if (!VaciasLista()) {
-            String user = JOptionPane.showInputDialog(null,
-                    "Digite el usuario del cliente a desactivar:");
-            if (inicio.getElemento().getUsuario().equals(user)) {
+            if (inicio.getElemento().getUsuario().equals(usuario)) {
                 inicio = inicio.getSiguiente();
                 JOptionPane.showMessageDialog(null,
                         "¡Se desactivo el cliente con exito!");
@@ -62,7 +60,7 @@ public class ListaES {
                 anterior = inicio;
                 auxiliar = inicio.getSiguiente();
                 while ((auxiliar != null) && (!auxiliar.getElemento()
-                        .getUsuario().equals(user))) {
+                        .getUsuario().equals(usuario))) {
                     anterior = anterior.getSiguiente();
                     auxiliar = auxiliar.getSiguiente();
                 }
