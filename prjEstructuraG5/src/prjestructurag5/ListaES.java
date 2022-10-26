@@ -28,6 +28,12 @@ public class ListaES {
         d.setContrasena(contrasena);
 
         Nodo nuevo = new Nodo();
+        
+        nombre = JOptionPane.showInputDialog("Ingrese el nombre:");
+        apellido = JOptionPane.showInputDialog("Ingrese el apellido:");
+        usuario = JOptionPane.showInputDialog("Ingrese el usuario:");
+        contrasena = JOptionPane.showInputDialog("Ingrese la contrasena:");
+        
         nuevo.setElemento(d);
         if (VaciasLista()) {
             inicio = nuevo;
