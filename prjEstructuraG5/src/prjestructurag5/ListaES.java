@@ -19,33 +19,26 @@ public class ListaES {
     }//fin Vacia()
 
     //-----------------------------METODOS---------------------------------
-    public void agregarUsuario(String nombre, String apellido, String usuario, String contrasena) {
-        JOptionPane.showMessageDialog(null, usuario + "-" + apellido + "-" + usuario + "-" + contrasena);
+    public void agregarUsuario(){
         Dato d = new Dato();
-        d.setNombre(nombre);
-        d.setApellido(apellido);
-        d.setUsuario(usuario);
-        d.setContrasena(contrasena);
+        d.setUsuario(JOptionPane.showInputDialog(null,"Digite su usuario:"));
+        d.setNombre(JOptionPane.showInputDialog(null,"Digite su nombre:"));  
+        d.setApellido(JOptionPane.showInputDialog(null,"Digite su apellido:"));
+        d.setContrasena(JOptionPane.showInputDialog(null,"Digite su contrasena:"));
 
         Nodo nuevo = new Nodo();
-        
-        nombre = JOptionPane.showInputDialog("Ingrese el nombre:");
-        apellido = JOptionPane.showInputDialog("Ingrese el apellido:");
-        usuario = JOptionPane.showInputDialog("Ingrese el usuario:");
-        contrasena = JOptionPane.showInputDialog("Ingrese la contrasena:");
-        
         nuevo.setElemento(d);
         if (VaciasLista()) {
             inicio = nuevo;
-        } else if (d.getNombre().compareTo(inicio.getElemento().getNombre()) < 0) {
+        } else if (d.getUsuario().compareTo(inicio.getElemento().getUsuario()) < 0) {
             nuevo.setSiguiente(inicio);
             inicio = nuevo;
         } else if (inicio.getSiguiente() == null) {
             inicio.setSiguiente(nuevo);
         } else {
             Nodo aux = inicio;
-            while ((aux.getSiguiente() != null) && (aux.getSiguiente().getElemento().getNombre().
-                    compareTo(d.getNombre()) < 0)) {
+            while ((aux.getSiguiente() != null) && (aux.getSiguiente().getElemento().getUsuario().
+                    compareTo(d.getUsuario()) < 0)) {
                 aux = aux.getSiguiente();
             }
             nuevo.setSiguiente(aux.getSiguiente());
