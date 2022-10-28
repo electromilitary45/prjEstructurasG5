@@ -19,12 +19,12 @@ public class ListaES {
     }//fin Vacia()
 
     //-----------------------------METODOS---------------------------------
-    public void agregarUsuario(){
+    public void agregarUsuario(String nombre, String apellido, String usuario, String contrasena){
         Dato d = new Dato();
-        d.setUsuario(JOptionPane.showInputDialog(null,"Digite su usuario:"));
-        d.setNombre(JOptionPane.showInputDialog(null,"Digite su nombre:"));  
-        d.setApellido(JOptionPane.showInputDialog(null,"Digite su apellido:"));
-        d.setContrasena(JOptionPane.showInputDialog(null,"Digite su contrasena:"));
+        d.setUsuario(usuario);
+        d.setNombre(nombre);  
+        d.setApellido(apellido);
+        d.setContrasena(contrasena);
 
         Nodo nuevo = new Nodo();
         nuevo.setElemento(d);

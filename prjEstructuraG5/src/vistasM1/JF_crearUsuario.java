@@ -116,6 +116,11 @@ public class JF_crearUsuario extends javax.swing.JFrame {
                 btn_crearMouseClicked(evt);
             }
         });
+        btn_crear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_crearActionPerformed(evt);
+            }
+        });
         jPanel1.add(btn_crear, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 330, 100, -1));
 
         btn_cancelar.setText("CANCELAR");
@@ -149,6 +154,24 @@ public class JF_crearUsuario extends javax.swing.JFrame {
 
     private void btn_crearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_crearMouseClicked
         // TODO add your handling code here:]
+        
+
+
+    }//GEN-LAST:event_btn_crearMouseClicked
+
+    private void btn_cancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_cancelarMouseClicked
+        // TODO add your handling code here:
+        dispose();
+        new JF_menuM1().setVisible(true);
+
+    }//GEN-LAST:event_btn_cancelarMouseClicked
+
+    private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_cancelarActionPerformed
+
+    private void btn_crearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_crearActionPerformed
+        // TODO add your handling code here:
         try {
             ListaES LE = new ListaES();
             if (!jtf_Usuario.getText().isEmpty() && !jtf_Usuario.getText().isBlank() && !jtf_nombre.getText().isEmpty()
@@ -171,20 +194,7 @@ public class JF_crearUsuario extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
-
-
-    }//GEN-LAST:event_btn_crearMouseClicked
-
-    private void btn_cancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_cancelarMouseClicked
-        // TODO add your handling code here:
-        dispose();
-        new JF_menuM1().setVisible(true);
-
-    }//GEN-LAST:event_btn_cancelarMouseClicked
-
-    private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_cancelarActionPerformed
+    }//GEN-LAST:event_btn_crearActionPerformed
 
     /**
      * @param args the command line arguments
