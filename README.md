@@ -2,12 +2,7 @@
  Proyecto Estructuras de Datos || Q3 2022 || Universidad Fidelitas
 
 
-Integrantes:
-
+Integrantes
 Sebastian Villalobos
-
 Aarón Bustos
-
 Marcel Zapata
-
-Monserrath Jimenez
