@@ -19,10 +19,10 @@ public class ListaES {
     }//fin Vacia()
 
     //-----------------------------METODOS---------------------------------
-    public void agregarUsuario(String nombre, String apellido, String usuario, String contrasena){
+    public void agregarUsuario(String nombre, String apellido, String usuario, String contrasena) {
         Dato d = new Dato();
         d.setUsuario(usuario);
-        d.setNombre(nombre);  
+        d.setNombre(nombre);
         d.setApellido(apellido);
         d.setContrasena(contrasena);
 

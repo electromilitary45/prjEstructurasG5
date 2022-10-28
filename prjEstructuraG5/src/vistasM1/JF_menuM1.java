@@ -41,6 +41,7 @@ public class JF_menuM1 extends javax.swing.JFrame {
         ico_retroceder = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocation(new java.awt.Point(600, 170));
         setName("MENU USUARIOS"); // NOI18N
         setUndecorated(true);
         setResizable(false);
