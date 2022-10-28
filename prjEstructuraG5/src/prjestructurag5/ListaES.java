@@ -20,7 +20,9 @@ public class ListaES {
 
     //-----------------------------METODOS---------------------------------
     public void agregarUsuario(String nombre, String apellido, String usuario, String contrasena) {
+        //--instacia
         Dato d = new Dato();
+        //--
         d.setUsuario(usuario);
         d.setNombre(nombre);
         d.setApellido(apellido);
@@ -28,14 +30,15 @@ public class ListaES {
 
         Nodo nuevo = new Nodo();
         nuevo.setElemento(d);
-        if (VaciasLista()) {
+        
+        if (VaciasLista()) {//se pone al inicio
             inicio = nuevo;
-        } else if (d.getUsuario().compareTo(inicio.getElemento().getUsuario()) < 0) {
+        } else if (d.getUsuario().compareTo(inicio.getElemento().getUsuario()) < 0) { // se pone a la derecha
             nuevo.setSiguiente(inicio);
             inicio = nuevo;
-        } else if (inicio.getSiguiente() == null) {
+        } else if (inicio.getSiguiente() == null) {//se pone a la izquierda 
             inicio.setSiguiente(nuevo);
-        } else {
+        } else {//se pone en medio
             Nodo aux = inicio;
             while ((aux.getSiguiente() != null) && (aux.getSiguiente().getElemento().getUsuario().
                     compareTo(d.getUsuario()) < 0)) {
@@ -76,5 +79,9 @@ public class ListaES {
     public void mostrarUsuarios() {
         JOptionPane.showMessageDialog(null, "AQUI SE MOSTRARAN LOS USUARIOS");
     }
+    
+    
+    
+    
 
 }//fin clase LISTAES(){}
