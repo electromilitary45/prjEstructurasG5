@@ -78,6 +78,18 @@ public class ListaES {
 
     public void mostrarUsuarios() {
         JOptionPane.showMessageDialog(null, "AQUI SE MOSTRARAN LOS USUARIOS");
+        if(!VaciasLista()){
+            String s="";
+            Nodo aux=inicio;
+            while(aux!=null){
+                s=s+"Usuario:"+aux.getElemento().getUsuario()+"\n------\n"+
+                  aux.getElemento().getNombre()+"\n"+aux.getElemento().getApellido()+
+                  "\n------\n"+aux.getElemento().getContrasena();
+            }
+            JOptionPane.showMessageDialog(null, s);
+        }else{
+            JOptionPane.showMessageDialog(null, "No hay usuarios registrados, no se puede mostrar");
+        }
     }
     
     
