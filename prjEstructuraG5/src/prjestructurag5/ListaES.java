@@ -88,10 +88,8 @@ public class ListaES {
                   "\n------\n"+aux.getElemento().getContrasena();
                 if(aux.getElemento().isEstado()==true){
                     a="Usuario Activo";
-                    JOptionPane.showMessageDialog(null, a);
                 }else{
                     a="Usuario Inactivo";
-                    JOptionPane.showMessageDialog(null, a);
                 }
             }
             JOptionPane.showMessageDialog(null, s+"\n"+a);
