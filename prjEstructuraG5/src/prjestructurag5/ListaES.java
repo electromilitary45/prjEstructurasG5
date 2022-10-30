@@ -88,11 +88,10 @@ public class ListaES {
                 }else{
                     a="Usuario Inactivo";
                 }                
-                s=s+"Usuario:"+aux.getElemento().getUsuario()+"\n------\n"+
-                  aux.getElemento().getNombre()+"\n"+aux.getElemento().getApellido()+
-                  "\n------\n"+aux.getElemento().getContrasena()+"\n------\n"+a;
+                s=s+"Usuario:"+aux.getElemento().getUsuario()+"--"+aux.getElemento().getNombre()+aux.getElemento().getApellido()
+                        +"--"+aux.getElemento().getContrasena()+"--"+a+"-->\n";
             }
-            JOptionPane.showMessageDialog(null, s+"\n"+a);
+            JOptionPane.showMessageDialog(null, s);
         }else{
             JOptionPane.showMessageDialog(null, "No hay usuarios registrados, no se puede mostrar");
         }
