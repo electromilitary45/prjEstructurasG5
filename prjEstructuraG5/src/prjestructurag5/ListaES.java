@@ -27,13 +27,14 @@ public class ListaES {
         d.setNombre(nombre);
         d.setApellido(apellido);
         d.setContrasena(contrasena);
+        d.setEstado(true);
 
         Nodo nuevo = new Nodo();
         nuevo.setElemento(d);
-        
+
         if (VaciasLista()) {//se pone al inicio
             inicio = nuevo;
-        } else if (d.getUsuario().compareTo(inicio.getElemento().getUsuario()) < 0) { // se pone a la derecha
+        } else if (d.getNombre().compareTo(inicio.getElemento().getNombre()) < 0) { // se pone a la derecha
             nuevo.setSiguiente(inicio);
             inicio = nuevo;
         } else if (inicio.getSiguiente() == null) {//se pone a la izquierda 
@@ -77,28 +78,24 @@ public class ListaES {
     }//fin desactivar
 
     public void mostrarUsuarios() {
-        JOptionPane.showMessageDialog(null, "AQUI SE MOSTRARAN LOS USUARIOS");
-        if(!VaciasLista()){
-            String s="";
-            String a="";
-            Nodo aux=inicio;
-            while(aux!=null){
-                if(aux.getElemento().isEstado()==true){
-                    a="Usuario Activo";
-                }else{
-                    a="Usuario Inactivo";
-                }                
-                s=s+"Usuario:"+aux.getElemento().getUsuario()+"--"+aux.getElemento().getNombre()+aux.getElemento().getApellido()
-                        +"--"+aux.getElemento().getContrasena()+"--"+a+"-->\n";
+        if (!VaciasLista()) {
+            String s = "";
+            String a = "";
+            Nodo aux = inicio;
+            while (aux != null) {
+                if (aux.getElemento().isEstado() == true) {
+                    a = "Usuario Activo";
+                } else {
+                    a = "Usuario Inactivo";
+                }
+                s = s + "Usuario:" + aux.getElemento().getUsuario() + "--" + aux.getElemento().getNombre() + aux.getElemento().getApellido()
+                        + "--" + aux.getElemento().getContrasena() + "--" + a + "\n";
+                aux = aux.getSiguiente();
             }
             JOptionPane.showMessageDialog(null, s);
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "No hay usuarios registrados, no se puede mostrar");
         }
     }
-    
-    
-    
-    
 
 }//fin clase LISTAES(){}
