@@ -42,7 +42,8 @@ public class menu {
             op1=JOptionPane.showInputDialog("A. MODULO 1 (USUARIOS)"
                     + "\nB. MODULO 2 (EVENTOS)"
                     + "\nC. MODULO 3 (VENTAS)"
-                    + "\nD. MODULO 4 (CAJAS)").toUpperCase().charAt(0);
+                    + "\nD. MODULO 4 (CAJAS)"
+                    + "\nS. SALIR").toUpperCase().charAt(0);
             switch (op1) {
                 case 'A': //MODULO USUARIOS
                     ListaES LES = new ListaES();
