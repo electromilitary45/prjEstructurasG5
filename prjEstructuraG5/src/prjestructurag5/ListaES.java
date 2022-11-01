@@ -52,7 +52,7 @@ public class ListaES {
     }//fin agregarUsuario
 
     public void desactivarUsuario() {
-        //JOptionPane.showMessageDialog(null, usuario);
+        
         String usuario = JOptionPane.showInputDialog("DIGITE EL USUARIO A ELIMINAR");
         if (!VaciasLista()) {
             if (inicio.getElemento().getUsuario().equals(usuario)) {
