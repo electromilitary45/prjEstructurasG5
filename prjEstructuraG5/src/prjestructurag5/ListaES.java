@@ -19,14 +19,15 @@ public class ListaES {
     }//fin Vacia()
 
     //-----------------------------METODOS---------------------------------
-    public void agregarUsuario(String nombre, String apellido, String usuario, String contrasena) {
+    public void agregarUsuario() {
         //--instacia
         Dato d = new Dato();
         //--
-        d.setUsuario(usuario);
-        d.setNombre(nombre);
-        d.setApellido(apellido);
-        d.setContrasena(contrasena);
+        d.setNombre(JOptionPane.showInputDialog("DIGITE UN NOMBRE"));
+        d.setUsuario(JOptionPane.showInputDialog("DIGITE UN NOMBRE DE USUARIO:"));
+
+        d.setApellido(JOptionPane.showInputDialog("DIGITE UN APELLIDO:"));
+        d.setContrasena(JOptionPane.showInputDialog("DIGITE UNA CONTRASEÑA:"));
         d.setEstado(true);
 
         Nodo nuevo = new Nodo();
@@ -50,8 +51,9 @@ public class ListaES {
         }
     }//fin agregarUsuario
 
-    public void desactivarUsuario(String usuario) {
+    public void desactivarUsuario() {
         //JOptionPane.showMessageDialog(null, usuario);
+        String usuario = JOptionPane.showInputDialog("DIGITE EL USUARIO A ELIMINAR");
         if (!VaciasLista()) {
             if (inicio.getElemento().getUsuario().equals(usuario)) {
                 inicio = inicio.getSiguiente();
