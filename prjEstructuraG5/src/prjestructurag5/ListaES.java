@@ -143,6 +143,7 @@ public class ListaES {
                     break;
             }
             DE.setLugar(lugar);
+            DE.setDireccion("Digite una direccion");
             DE.setFecha(JOptionPane.showInputDialog("Digite la fecha del evento con el siguiente formato dd/mm/yyyy"));
             DE.setStatus(true);
             
@@ -176,7 +177,7 @@ public class ListaES {
             String s = "";
             NodoSC aux = inicioSC;
             s = s + aux.getDato().getNombre() + "--" + aux.getDato().getFecha()
-                    + "--" + aux.getDato().getCiudad() + aux.getDato().getLugar() + "--" + aux.getDato().isStatus() + "-->";
+                    + "--" + aux.getDato().getCiudad() + aux.getDato().getLugar() +"--"+aux.getDato().getDireccion()+ "--" + aux.getDato().isStatus() + "-->";
             aux = aux.getSiguiente();
             while (aux != inicioSC) {
                 s = s + aux.getDato().getNombre() + "--" + aux.getDato().getFecha()

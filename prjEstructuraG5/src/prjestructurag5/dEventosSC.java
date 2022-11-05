@@ -14,6 +14,7 @@ public class dEventosSC {
     private String fecha;
     private String lugar; //Estadio,Anfiteatro, Teatro
     private String ciudad;
+    private String direccion;
     private boolean status;
 
     public dEventosSC() {
@@ -21,6 +22,7 @@ public class dEventosSC {
         this.fecha="";
         this.lugar="";
         this.nombre="";
+        this.direccion="";
         this.status=true;
     }
     
@@ -60,6 +62,14 @@ public class dEventosSC {
 
     public boolean isStatus() {
         return status;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     public void setStatus(boolean status) {
