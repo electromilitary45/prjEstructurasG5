@@ -4,21 +4,37 @@ import javax.swing.JOptionPane;
 
 public class ListaES {
 
+    //----ATRIBUTOS MODULO 1-------
     private Nodo inicio;
+    //----ATRIBUTOS MODULO 2-------
+    private NodoSC inicioSC;
+    private NodoSC finSC;
 
+    //------CONSTRUCTOR--------
     public ListaES() {
-        this.inicio = null;
+        this.inicio = null;//EnlazadaSimple
+        this.inicioSC = null;//SimpleCircular
+        this.finSC = null;//simpleCircular
     }
 
+    //------METODOS GENERALES-----
     public boolean VaciasLista() {
         if (inicio == null) {
             return true;
         } else {
             return false;
         }
-    }//fin Vacia()
+    }//fin VaciaES()
 
-    //-----------------------------METODOS---------------------------------
+    public boolean vaciaSC() {
+        if (inicioSC == null) {
+            return true;
+        } else {
+            return false;
+        }
+    }//fin vaciaSC
+
+    //-----------------------------METODOS MODULO 1---------------------------------
     public void agregarUsuario() {
         //--instacia
         Dato d = new Dato();
@@ -52,7 +68,7 @@ public class ListaES {
     }//fin agregarUsuario
 
     public void desactivarUsuario() {
-        
+
         String usuario = JOptionPane.showInputDialog("DIGITE EL USUARIO A ELIMINAR");
         if (!VaciasLista()) {
             if (inicio.getElemento().getUsuario().equals(usuario)) {
@@ -99,5 +115,121 @@ public class ListaES {
             JOptionPane.showMessageDialog(null, "No hay usuarios registrados, no se puede mostrar");
         }
     }
+
+    //-----------------------------METODOS MODULO 2---------------------------------
+    public void agregarEvento()  {
+        try {
+            dEventosSC DE = new dEventosSC();
+            DE.setNombre(JOptionPane.showInputDialog("Digite el nombre del evento:"));
+            DE.setCiudad(JOptionPane.showInputDialog("Digite el nombre de la Ciudad"));
+            char op = ' ';
+            String lugar = "";
+            while (op != 'A' && op != 'B' && op != 'C') {
+
+                op = JOptionPane.showInputDialog("Seleccione un lugar"
+                        + "\nA. ESTADIO"
+                        + "\nB. ANFITEATRO"
+                        + "\nC. TEATRO").toUpperCase().charAt(0);
+            }
+            switch (op) {
+                case 'A':
+                    lugar = "ESTADIO";
+                    break;
+                case 'B':
+                    lugar = "ANFITEATRO";
+                    break;
+                case 'C':
+                    lugar = "TEATRO";
+                    break;
+            }
+            DE.setLugar(lugar);
+            DE.setFecha(JOptionPane.showInputDialog("Digite la fecha del evento con el siguiente formato dd/mm/yyyy"));
+            DE.setStatus(true);
+            
+            //se crea nodo
+            NodoSC nuevo = new NodoSC();
+            //se almacena 
+            nuevo.setDato(DE);
+
+            //------RECURSIVIDAD--------
+            char r = JOptionPane.showInputDialog("Desea ingresar otro evento?"
+                    + "\nSI || NO").toUpperCase().charAt(0);
+            if (r == 'S') {
+                agregarEvento();
+            } else {
+                JOptionPane.showMessageDialog(null, "Evento agregado");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al agregar evento"
+                    + "\n" + e.getMessage());
+            char r = JOptionPane.showInputDialog("Desea intentar de nuevo?"
+                    + "\nSI || NO").toUpperCase().charAt(0);
+            if (r == 'S') {
+                agregarEvento();
+            }
+        }
+
+    }//fin agregarEvento
+
+    public void mostrarEvento() {
+        if (!vaciaSC()) {
+            String s = "";
+            NodoSC aux = inicioSC;
+            s = s + aux.getDato().getNombre() + "--" + aux.getDato().getFecha()
+                    + "--" + aux.getDato().getCiudad() + aux.getDato().getLugar() + "--" + aux.getDato().isStatus() + "-->";
+            aux = aux.getSiguiente();
+            while (aux != inicioSC) {
+                s = s + aux.getDato().getNombre() + "--" + aux.getDato().getFecha()
+                        + "--" + aux.getDato().getCiudad() + aux.getDato().getLugar() + "--" + aux.getDato().isStatus() + "-->";
+                aux = aux.getSiguiente();
+            }
+            JOptionPane.showMessageDialog(null, s);
+        } else {
+            JOptionPane.showMessageDialog(null, "NO EXISTEN DATOS");
+        }
+    }//fin mostrarEvento
+
+    public void editarEvento() {
+        try {
+
+            //------RECURSIVIDAD--------
+            char r = JOptionPane.showInputDialog("Desea editar otro evento?"
+                    + "\nSI || NO").toUpperCase().charAt(0);
+            if (r == 'S') {
+                editarEvento();
+            } else {
+                JOptionPane.showMessageDialog(null, "Evento editado");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al editar evento"
+                    + "\n" + e.getMessage());
+            char r = JOptionPane.showInputDialog("Desea intentar de nuevo?"
+                    + "\nSI || NO").toUpperCase().charAt(0);
+            if (r == 'S') {
+                editarEvento();
+            }
+        }
+    }//fin editarEvento(){}
+
+    public void inactivarEvento() {
+        try {
+            //------RECURSIVIDAD--------
+            char r = JOptionPane.showInputDialog("Desea desactivar otro evento?"
+                    + "\nSI || NO").toUpperCase().charAt(0);
+            if (r == 'S') {
+                inactivarEvento();
+            } else {
+                JOptionPane.showMessageDialog(null, "Evento desactivado");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al desactivar evento"
+                    + "\n" + e.getMessage());
+            char r = JOptionPane.showInputDialog("Desea intentar de nuevo?"
+                    + "\nSI || NO").toUpperCase().charAt(0);
+            if (r == 'S') {
+                inactivarEvento();
+            }
+        }
+    }//fin inactivarEvvento(){}
 
 }//fin clase LISTAES(){}

@@ -6,7 +6,6 @@ package prjestructurag5;
 
 import javax.swing.JOptionPane;
 
-
 /**
  *
  * @author Derek
@@ -25,7 +24,7 @@ public class menu {
             } else {
                 ini = JOptionPane.showInputDialog("Desea salir:"
                         + "SI || NO").toUpperCase().charAt(0);
-                if(ini=='S'){
+                if (ini == 'S') {
                     JOptionPane.showMessageDialog(null, "HASTA LUEGO");
                 }
             }
@@ -35,21 +34,22 @@ public class menu {
 
     public void menuP() {
         //---INSTACIAS--
-        
+
         //----VARIABLES---
-        char op1=' ';
-        while (op1!='S') {            
-            op1=JOptionPane.showInputDialog("A. MODULO 1 (USUARIOS)"
+        char op1 = ' ';
+        while (op1 != 'S') {
+            ListaES LES = new ListaES();
+            char op2 = ' ';
+            op1 = JOptionPane.showInputDialog("A. MODULO 1 (USUARIOS)"
                     + "\nB. MODULO 2 (EVENTOS)"
                     + "\nC. MODULO 3 (VENTAS)"
                     + "\nD. MODULO 4 (CAJAS)"
                     + "\nS. SALIR").toUpperCase().charAt(0);
             switch (op1) {
                 case 'A': //MODULO USUARIOS
-                    ListaES LES = new ListaES();
-                    char op2=' ';
-                    while (op2!='S') {                        
-                        op2=JOptionPane.showInputDialog("SELECCION LA OPCION:"
+
+                    while (op2 != 'S') {
+                        op2 = JOptionPane.showInputDialog("SELECCION LA OPCION:"
                                 + "\nA. REGISTRO USUARIOS"
                                 + "\nB. DESACTIVAR USUARIOS"
                                 + "\nC. MOSTRAR USUARIOS"
@@ -72,6 +72,32 @@ public class menu {
                     }
                     break;//-----------------------
                 case 'B'://MODULO EVENTOS
+                    while (op2 != 'S') {
+                        op2=JOptionPane.showInputDialog("SELECCIONE LA OPCION:"
+                                + "\nA. AGREGAR EVENTO"
+                                + "\nB. MOSTRAR EVENTOS"
+                                + "\nC. EDITAR EVENTO"
+                                + "\nD. INACTIVAR EVENTO"
+                                + "\nS. SALIR").toUpperCase().charAt(0);
+                        switch (op2) {
+                            case 'A':
+                                LES.agregarEvento();
+                                break;
+                            case 'B':
+                                LES.mostrarEvento();
+                                break;
+                            case 'C':
+                                LES.editarEvento();
+                                break;
+                            case 'D':
+                                LES.inactivarEvento();
+                                break;
+                            case 'S':
+                                break;
+                            default:
+                                JOptionPane.showMessageDialog(null, "OPCION INVALIDA");
+                        }
+                    }
                     break;//-----------------------
                 case 'C'://MODULO VENTAS
                     break;//-----------------------
