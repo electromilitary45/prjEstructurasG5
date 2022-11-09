@@ -67,14 +67,14 @@ public class ListaES {
         }
     }//fin agregarUsuario
 
-    public void desactivarUsuario() {
+    public void eliminarUsuario() {
 
         String usuario = JOptionPane.showInputDialog("DIGITE EL USUARIO A ELIMINAR");
         if (!VaciasLista()) {
             if (inicio.getElemento().getUsuario().equals(usuario)) {
                 inicio = inicio.getSiguiente();
                 JOptionPane.showMessageDialog(null,
-                        "¡Se desactivo el cliente con exito!");
+                        "¡Se elimino el cliente con exito!");
             } else {
                 Nodo anterior;
                 Nodo auxiliar;
@@ -93,7 +93,40 @@ public class ListaES {
             JOptionPane.showMessageDialog(null,
                     "La lista esta vacia");
         }
-    }//fin desactivar
+    }//fin eliminar
+
+    //inicio desactivar usuario
+    public void desactivarUsuario() {
+        Dato d = new Dato();
+        String usuario = JOptionPane.showInputDialog("DIGITE EL USUARIO A DESACTIVAR");
+        if (!VaciasLista()) {
+            if (inicio.getElemento().getUsuario().equals(usuario)) {
+                //inicio = inicio.getSiguiente();
+                d.setEstado(false);
+                JOptionPane.showMessageDialog(null,
+                        "¡Se desactivo el cliente con exito!");
+            } else {
+                Nodo anterior;
+                Nodo auxiliar;
+                anterior = inicio;
+                auxiliar = inicio.getSiguiente();
+                while ((auxiliar != null) && (!auxiliar.getElemento()
+                        .getUsuario().equals(usuario))) {
+                    d.setEstado(false);
+                    anterior = anterior.getSiguiente();
+                    auxiliar = auxiliar.getSiguiente();
+                }
+                if (auxiliar != null) {
+                    anterior.setSiguiente(auxiliar.getSiguiente());
+                }
+                JOptionPane.showMessageDialog(null, "Usuario:" + usuario + " descativado con exito");
+            }
+            JOptionPane.showMessageDialog(null, "Usuario no encontrado");
+        } else {
+            JOptionPane.showMessageDialog(null,
+                    "La lista esta vacia");
+        }
+    }//fin desactivar usario
 
     public void mostrarUsuarios() {
         if (!VaciasLista()) {
@@ -117,7 +150,7 @@ public class ListaES {
     }
 
     //-----------------------------METODOS MODULO 2---------------------------------
-    public void agregarEvento()  {
+    public void agregarEvento() {
         try {
             dEventosSC DE = new dEventosSC();
             DE.setNombre(JOptionPane.showInputDialog("Digite el nombre del evento:"));
@@ -146,7 +179,7 @@ public class ListaES {
             DE.setDireccion("Digite una direccion");
             DE.setFecha(JOptionPane.showInputDialog("Digite la fecha del evento con el siguiente formato dd/mm/yyyy"));
             DE.setStatus(true);
-            
+
             //se crea nodo
             NodoSC nuevo = new NodoSC();
             //se almacena 
@@ -177,7 +210,7 @@ public class ListaES {
             String s = "";
             NodoSC aux = inicioSC;
             s = s + aux.getDato().getNombre() + "--" + aux.getDato().getFecha()
-                    + "--" + aux.getDato().getCiudad() + aux.getDato().getLugar() +"--"+aux.getDato().getDireccion()+ "--" + aux.getDato().isStatus() + "-->";
+                    + "--" + aux.getDato().getCiudad() + aux.getDato().getLugar() + "--" + aux.getDato().getDireccion() + "--" + aux.getDato().isStatus() + "-->";
             aux = aux.getSiguiente();
             while (aux != inicioSC) {
                 s = s + aux.getDato().getNombre() + "--" + aux.getDato().getFecha()
@@ -234,3 +267,4 @@ public class ListaES {
     }//fin inactivarEvvento(){}
 
 }//fin clase LISTAES(){}
+
