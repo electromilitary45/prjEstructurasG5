@@ -100,28 +100,33 @@ public class ListaES {
         Dato d = new Dato();
         String usuario = JOptionPane.showInputDialog("DIGITE EL USUARIO A DESACTIVAR");
         if (!VaciasLista()) {
-            if (inicio.getElemento().getUsuario().equals(usuario)) {
+            if (inicio.getElemento().getUsuario().equals(usuario) == true) {
                 //inicio = inicio.getSiguiente();
                 d.setEstado(false);
+                inicio.getElemento().setEstado(false);
+                //JOptionPane.showMessageDialog(null,
+                //"¡Se desactivo el cliente con exito!");
                 JOptionPane.showMessageDialog(null,
-                        "¡Se desactivo el cliente con exito!");
+                        "Usuario: " + usuario + " descativado con exito");
             } else {
-                Nodo anterior;
-                Nodo auxiliar;
-                anterior = inicio;
-                auxiliar = inicio.getSiguiente();
-                while ((auxiliar != null) && (!auxiliar.getElemento()
-                        .getUsuario().equals(usuario))) {
-                    d.setEstado(false);
-                    anterior = anterior.getSiguiente();
-                    auxiliar = auxiliar.getSiguiente();
-                }
-                if (auxiliar != null) {
-                    anterior.setSiguiente(auxiliar.getSiguiente());
-                }
-                JOptionPane.showMessageDialog(null, "Usuario:" + usuario + " descativado con exito");
+
+                JOptionPane.showMessageDialog(null, "Usuario no encontrado");
+
+                //todo esto esta comentado porque no tiene uso, pero no se si se pude quitar o no.
+                //Nodo anterior;
+                //Nodo auxiliar;
+                //anterior = inicio;
+                //auxiliar = inicio.getSiguiente();
+                //while ((auxiliar != null) && (!auxiliar.getElemento()
+                //        .getUsuario().equals(usuario))) {
+                //   d.setEstado(false);
+                //    anterior = anterior.getSiguiente();
+                //    auxiliar = auxiliar.getSiguiente();
+                //}
+                //if (auxiliar != null) {
+                //    anterior.setSiguiente(auxiliar.getSiguiente());
+                //}
             }
-            JOptionPane.showMessageDialog(null, "Usuario no encontrado");
         } else {
             JOptionPane.showMessageDialog(null,
                     "La lista esta vacia");
@@ -139,7 +144,7 @@ public class ListaES {
                 } else {
                     a = "Usuario Inactivo";
                 }
-                s = s + "Usuario:" + aux.getElemento().getUsuario() + "--" + aux.getElemento().getNombre() +" "+ aux.getElemento().getApellido()
+                s = s + "Usuario:" + aux.getElemento().getUsuario() + "--" + aux.getElemento().getNombre() + " " + aux.getElemento().getApellido()
                         + "--" + aux.getElemento().getContrasena() + "--" + a + "\n";
                 aux = aux.getSiguiente();
             }
