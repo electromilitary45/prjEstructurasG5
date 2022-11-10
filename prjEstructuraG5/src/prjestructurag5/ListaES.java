@@ -144,7 +144,7 @@ public class ListaES {
                 } else {
                     a = "Usuario Inactivo";
                 }
-                s = s + "Usuario:" + aux.getElemento().getUsuario() + "--" + aux.getElemento().getNombre() + " " + aux.getElemento().getApellido()
+                s = s + "Usuario: " + aux.getElemento().getUsuario() + "--" + aux.getElemento().getNombre() + " " + aux.getElemento().getApellido()
                         + "--" + aux.getElemento().getContrasena() + "--" + a + "\n";
                 aux = aux.getSiguiente();
             }
@@ -189,6 +189,23 @@ public class ListaES {
             NodoSC nuevo = new NodoSC();
             //se almacena 
             nuevo.setDato(DE);
+            //INICIO DE LOGICA DE AGREGAR
+            if (VaciasLista()) {//se pone al inicio
+                inicioSC = nuevo;
+            } else if (DE.getNombre().compareTo(inicioSC.getDato().getNombre()) < 0) { // se pone a la derecha
+                nuevo.setSiguiente(inicioSC);
+                inicioSC = nuevo;
+            } else if (inicioSC.getSiguiente() == null) {//se pone a la izquierda 
+                inicioSC.setSiguiente(nuevo);
+            } else {//se pone en medio 
+                NodoSC aux = inicioSC;
+                while ((aux.getSiguiente() != null) && (aux.getSiguiente().getDato().getNombre().
+                        compareTo(DE.getNombre()) < 0)) {
+                    aux = aux.getSiguiente();
+                }
+                nuevo.setSiguiente(aux.getSiguiente());
+                aux.setSiguiente(nuevo);
+            }//FIN DE LOGICA DE AGREGAR
 
             //------RECURSIVIDAD--------
             char r = JOptionPane.showInputDialog("Desea ingresar otro evento?"
