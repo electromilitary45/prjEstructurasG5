@@ -139,7 +139,7 @@ public class ListaES {
                 } else {
                     a = "Usuario Inactivo";
                 }
-                s = s + "Usuario:" + aux.getElemento().getUsuario() + "--" + aux.getElemento().getNombre() + aux.getElemento().getApellido()
+                s = s + "Usuario:" + aux.getElemento().getUsuario() + "--" + aux.getElemento().getNombre() +" "+ aux.getElemento().getApellido()
                         + "--" + aux.getElemento().getContrasena() + "--" + a + "\n";
                 aux = aux.getSiguiente();
             }
