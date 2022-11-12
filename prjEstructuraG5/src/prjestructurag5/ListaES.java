@@ -259,7 +259,13 @@ public class ListaES {
             char r = JOptionPane.showInputDialog("Desea editar otro evento?"
                     + "\nSI || NO").toUpperCase().charAt(0);
             if (r == 'S') {
-                editarEvento();
+                String eventoCambiar=JOptionPane.showInputDialog(null,
+                        "Digite la fecha del evento a cambiar: ");
+                NodoSC aux=;
+                if(inicioSC.getDato().getFecha().equals(eventoCambiar)){
+                    
+                    
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "Evento editado");
             }
