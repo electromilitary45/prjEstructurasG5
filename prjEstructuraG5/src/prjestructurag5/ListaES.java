@@ -261,10 +261,38 @@ public class ListaES {
             if (r == 'S') {
                 String fechaEvent=JOptionPane.showInputDialog(null,
                         "Digite la fecha del evento a cambiar: ");
-                NodoSC aux=;
                 if(inicioSC.getDato().getFecha().equals(fechaEvent)){
-                    
+                    int cambio=Integer.parseInt((JOptionPane.showInputDialog(null, 
+                    "Que desea editar del evento de fecha "+inicioSC.getDato().getFecha()+":\n"
+                    + "1. El nombre\n"
+                    + "2. La ciudad\n"
+                    + "3. La Direccion\n"
+                    + "4. La Fecha\n"
+                    + "5. Salir del modo de edición\n"
+                    + "Digite lo que desea editar:")));
+                    switch(cambio){
+                        case 1:
+                            inicioSC.getDato().setNombre(JOptionPane.showInputDialog(null,
+                                    "Digite el nombre:"));
+                            break;
+                        case 2:
+                            inicioSC.getDato().setCiudad(JOptionPane.showInputDialog(null,
+                                    "Digite la ciudad:"));
+                            break;
+                        case 3:
+                            inicioSC.getDato().setDireccion(JOptionPane.showInputDialog(null,
+                                    "Digite la direccion:"));
+                            break;
+                        case 4:
+                            inicioSC.getDato().setFecha(JOptionPane.showInputDialog(null,
+                                    "Digite la fecha:"));
+                            break;
+                        case 5:
+                            System.exit(0);
+                            break;
+                    }  
                 }
+                JOptionPane.showMessageDialog(null,"Se ha editado el evento");
             } else {
                 JOptionPane.showMessageDialog(null, "Evento editado");
             }
@@ -289,7 +317,7 @@ public class ListaES {
                         "Digite la fecha del evento a desactivar: ");
                 if(inicioSC.getDato().getFecha().equals(fechaEvent)==true){
                     JOptionPane.showMessageDialog(null,
-                    "Se desactivara el evento de la fecha "+inicioSC.getDato().getFecha());
+                    "Se desactivara el evento de fecha "+inicioSC.getDato().getFecha());
                     inicioSC.getDato().setStatus(false);
                     JOptionPane.showMessageDialog(null,"Se desactivo el evento con exito");
                 }
