@@ -259,11 +259,10 @@ public class ListaES {
             char r = JOptionPane.showInputDialog("Desea editar otro evento?"
                     + "\nSI || NO").toUpperCase().charAt(0);
             if (r == 'S') {
-                String eventoCambiar=JOptionPane.showInputDialog(null,
+                String fechaEvent=JOptionPane.showInputDialog(null,
                         "Digite la fecha del evento a cambiar: ");
                 NodoSC aux=;
-                if(inicioSC.getDato().getFecha().equals(eventoCambiar)){
-                    
+                if(inicioSC.getDato().getFecha().equals(fechaEvent)){
                     
                 }
             } else {
@@ -286,7 +285,14 @@ public class ListaES {
             char r = JOptionPane.showInputDialog("Desea desactivar otro evento?"
                     + "\nSI || NO").toUpperCase().charAt(0);
             if (r == 'S') {
-                inactivarEvento();
+                String fechaEvent=JOptionPane.showInputDialog(null,
+                        "Digite la fecha del evento a desactivar: ");
+                if(inicioSC.getDato().getFecha().equals(fechaEvent)==true){
+                    JOptionPane.showMessageDialog(null,
+                    "Se desactivara el evento de la fecha "+inicioSC.getDato().getFecha());
+                    inicioSC.getDato().setStatus(false);
+                    JOptionPane.showMessageDialog(null,"Se desactivo el evento con exito");
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "Evento desactivado");
             }
