@@ -253,85 +253,215 @@ public class ListaES {
     }//fin mostrarEvento
 
     public void editarEvento() {
-        try {
-            //------RECURSIVIDAD--------
-            char r = JOptionPane.showInputDialog("Desea editar otro evento?"
-                    + "\nSI || NO").toUpperCase().charAt(0);
-            if (r == 'S') {
-                String fechaEvent=JOptionPane.showInputDialog(null,
-                        "Digite la fecha del evento a cambiar: ");
-                if(inicioSC.getDato().getFecha().equals(fechaEvent)){
-                    int cambio=Integer.parseInt((JOptionPane.showInputDialog(null, 
-                    "Que desea editar del evento de fecha "+inicioSC.getDato().getFecha()+":\n"
-                    + "1. El nombre\n"
-                    + "2. La ciudad\n"
-                    + "3. La Direccion\n"
-                    + "4. La Fecha\n"
-                    + "5. Salir del modo de edición\n"
-                    + "Digite lo que desea editar:")));
-                    switch(cambio){
-                        case 1:
-                            inicioSC.getDato().setNombre(JOptionPane.showInputDialog(null,
-                                    "Digite el nombre:"));
-                            break;
-                        case 2:
-                            inicioSC.getDato().setCiudad(JOptionPane.showInputDialog(null,
-                                    "Digite la ciudad:"));
-                            break;
-                        case 3:
-                            inicioSC.getDato().setDireccion(JOptionPane.showInputDialog(null,
-                                    "Digite la direccion:"));
-                            break;
-                        case 4:
-                            inicioSC.getDato().setFecha(JOptionPane.showInputDialog(null,
-                                    "Digite la fecha:"));
-                            break;
-                        case 5:
-                            System.exit(0);
-                            break;
-                    }  
+
+        if (!vaciaSC()) {
+            boolean encontrado = false;
+            try {
+                String nombre = "";
+                while (nombre.equals("")) {
+                    nombre = JOptionPane.showInputDialog("Digite el nombre del evento a editar");
                 }
-                JOptionPane.showMessageDialog(null,"Se ha editado el evento");
-            } else {
-                JOptionPane.showMessageDialog(null, "Evento editado");
+
+                //buscado el evento
+                NodoSC aux = inicioSC;
+                char op = ' ';
+                if (aux.getDato().getNombre().equals(nombre)) {
+                    encontrado = true;
+                    while (op != 'A' && op != 'B' && op != 'C' && op != 'D' && op != 'E' && op != 'S') {
+                        op = JOptionPane.showInputDialog("Que Desea editar?"
+                                + "\nA. Nombre (" + aux.getDato().getNombre() + ")"
+                                + "\nB. Ciudad (" + aux.getDato().getCiudad() + ")"
+                                + "\nC. Lugar (" + aux.getDato().getLugar() + ")"
+                                + "\nD. Direccion (" + aux.getDato().getDireccion() + ")"
+                                + "\nE. Fecha (" + aux.getDato().getFecha() + ")").toUpperCase().charAt(0);
+
+                        switch (op) {
+                            case 'A':
+                                aux.getDato().setNombre(JOptionPane.showInputDialog("Digite el nuevo nombre: \n Actual: " + aux.getDato().getNombre()));
+                                break;
+                            case 'B':
+                                aux.getDato().setCiudad(JOptionPane.showInputDialog("Digite la nueva ciudad: \n Actual: " + aux.getDato().getCiudad()));
+                                break;//fin set ciudad
+                            case 'C':
+                                char op2 = JOptionPane.showInputDialog("Seleccione un lugar"
+                                        + "\nA. ESTADIO"
+                                        + "\nB. ANFITEATRO"
+                                        + "\nC. TEATRO").toUpperCase().charAt(0);
+
+                                switch (op2) {
+                                    case 'A':
+                                        aux.getDato().setLugar("ESTADIO");
+                                        break;
+                                    case 'B':
+                                        aux.getDato().setLugar("ANFITEATRO");
+                                        break;
+                                    case 'C':
+                                        aux.getDato().setLugar("TEATRO");
+                                        break;
+
+                                }
+                                break;//fin set lugar
+                            case 'D':
+                                aux.getDato().setDireccion(JOptionPane.showInputDialog("Digite la nueva direccion:\nActual: " + aux.getDato().getDireccion()));
+                                break;
+                            case 'E':
+                                aux.getDato().setFecha(JOptionPane.showInputDialog("Digite la nueva fecha 'dd/mm/aaaa' \nActual: " + aux.getDato().getFecha()));
+                                break;
+
+                            case 'S':
+                                break;
+
+                        }
+                    }
+
+                }//fin if
+                aux = aux.getSiguiente();
+                while (aux != inicioSC) {
+                    if (aux.getDato().getNombre().equals(nombre)) {
+                        encontrado = true;
+                        while (op != 'A' && op != 'B' && op != 'C' && op != 'D' && op != 'E' && op != 'S') {
+                            op = JOptionPane.showInputDialog("Que Desea editar?"
+                                    + "\nA. Nombre (" + aux.getDato().getNombre() + ")"
+                                    + "\nB. Ciudad (" + aux.getDato().getCiudad() + ")"
+                                    + "\nC. Lugar (" + aux.getDato().getLugar() + ")"
+                                    + "\nD. Direccion (" + aux.getDato().getDireccion() + ")"
+                                    + "\nE. Fecha (" + aux.getDato().getFecha() + ")").toUpperCase().charAt(0);
+
+                            switch (op) {
+                                case 'A':
+                                    aux.getDato().setNombre(JOptionPane.showInputDialog("Digite el nuevo nombre: \n Actual: " + aux.getDato().getNombre()));
+                                    break;
+                                case 'B':
+                                    aux.getDato().setCiudad(JOptionPane.showInputDialog("Digite la nueva ciudad: \n Actual: " + aux.getDato().getCiudad()));
+                                    break;//fin set ciudad
+                                case 'C':
+                                    op = JOptionPane.showInputDialog("Seleccione un lugar"
+                                            + "\nA. ESTADIO"
+                                            + "\nB. ANFITEATRO"
+                                            + "\nC. TEATRO").toUpperCase().charAt(0);
+
+                                    switch (op) {
+                                        case 'A':
+                                            aux.getDato().setLugar("ESTADIO");
+                                            break;
+                                        case 'B':
+                                            aux.getDato().setLugar("ANFITEATRO");
+                                            break;
+                                        case 'C':
+                                            aux.getDato().setLugar("TEATRO");
+                                            break;
+
+                                    }
+                                    break;//fin set lugar
+                                case 'D':
+                                    aux.getDato().setDireccion(JOptionPane.showInputDialog("Digite la nueva direccion:\nActual: " + aux.getDato().getDireccion()));
+                                    break;
+                                case 'E':
+                                    aux.getDato().setFecha(JOptionPane.showInputDialog("Digite la nueva fecha 'dd/mm/aaaa' \nActual: " + aux.getDato().getFecha()));
+                                    break;
+
+                                case 'S':
+                                    break;
+
+                            }
+                        }
+
+                    }
+                    aux = aux.getSiguiente();
+                }
+
+                //------RECURSIVIDAD--------
+                if (encontrado == true) {
+                    char r = JOptionPane.showInputDialog("Desea editar otro evento?"
+                            + "\nSI || NO").toUpperCase().charAt(0);
+                    if (r == 'S') {
+                        editarEvento();
+                    }
+                } else {
+                    char r = JOptionPane.showInputDialog("No fue posible encontrar el evento \nDesea editar otro evento?"
+                            + "\nSI || NO").toUpperCase().charAt(0);
+                    if (r == 'S') {
+                        editarEvento();
+                    }
+                }
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Error al editar evento"
+                        + "\n" + e.getMessage());
+                char r = JOptionPane.showInputDialog("Desea intentar de nuevo?"
+                        + "\nSI || NO").toUpperCase().charAt(0);
+                if (r == 'S') {
+                    editarEvento();
+                }
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al editar evento"
-                    + "\n" + e.getMessage());
-            char r = JOptionPane.showInputDialog("Desea intentar de nuevo?"
-                    + "\nSI || NO").toUpperCase().charAt(0);
-            if (r == 'S') {
-                editarEvento();
-            }
+        } else {
+            JOptionPane.showMessageDialog(null, "LISTA VACIA");
         }
+
     }//fin editarEvento(){}
 
     public void inactivarEvento() {
-        try {
-            //------RECURSIVIDAD--------
-            char r = JOptionPane.showInputDialog("Desea desactivar otro evento?"
-                    + "\nSI || NO").toUpperCase().charAt(0);
-            if (r == 'S') {
-                String fechaEvent=JOptionPane.showInputDialog(null,
-                        "Digite la fecha del evento a desactivar: ");
-                if(inicioSC.getDato().getFecha().equals(fechaEvent)==true){
-                    JOptionPane.showMessageDialog(null,
-                    "Se desactivara el evento de fecha "+inicioSC.getDato().getFecha());
-                    inicioSC.getDato().setStatus(false);
-                    JOptionPane.showMessageDialog(null,"Se desactivo el evento con exito");
+        if (!vaciaSC()) {
+            boolean encontrado = false;
+            try {
+                String nombre = "";
+                while (nombre.equals("")) {
+                    nombre = JOptionPane.showInputDialog("Digite el nombre del evento a desactivar");
+
                 }
-            } else {
-                JOptionPane.showMessageDialog(null, "Evento desactivado");
+
+                //buscado el evento
+                NodoSC aux = inicioSC;
+                char op = ' ';
+                if (aux.getDato().getNombre().equals(nombre)) {
+                    encontrado = true;
+                    if (aux.getDato().isStatus() == true) {
+                        aux.getDato().setStatus(false);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "El evento se encuectra inactivo actualmente");
+                    }
+                }
+                aux = aux.getSiguiente();
+                while (aux != inicioSC) {
+                    if (aux.getDato().getNombre().equals(nombre)) {
+                        encontrado = true;
+                        if (aux.getDato().isStatus() == true) {
+                            aux.getDato().setStatus(false);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "El evento se encuectra inactivo actualmente");
+                        }
+                    }
+                    aux = aux.getSiguiente();
+                }
+
+                //------RECURSIVIDAD--------
+                if (encontrado == true) {
+                    char r = JOptionPane.showInputDialog("Desea desactivar otro evento?"
+                            + "\nSI || NO").toUpperCase().charAt(0);
+                    if (r == 'S') {
+                        editarEvento();
+                    }
+                } else {
+                    char r = JOptionPane.showInputDialog("No fue posible encontrar el evento \nDesea desactivar  otro evento?"
+                            + "\nSI || NO").toUpperCase().charAt(0);
+                    if (r == 'S') {
+                        editarEvento();
+                    }
+                }
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Error al desactivar  evento"
+                        + "\n" + e.getMessage());
+                char r = JOptionPane.showInputDialog("Desea intentar de nuevo?"
+                        + "\nSI || NO").toUpperCase().charAt(0);
+                if (r == 'S') {
+                    editarEvento();
+                }
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al desactivar evento"
-                    + "\n" + e.getMessage());
-            char r = JOptionPane.showInputDialog("Desea intentar de nuevo?"
-                    + "\nSI || NO").toUpperCase().charAt(0);
-            if (r == 'S') {
-                inactivarEvento();
-            }
+        } else {
+            JOptionPane.showMessageDialog(null, "NO EXISTEN DATOS");
         }
+
     }//fin inactivarEvvento(){}
 
 }//fin clase LISTAES(){}
