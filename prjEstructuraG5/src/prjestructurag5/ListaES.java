@@ -254,7 +254,6 @@ public class ListaES {
 
     public void editarEvento() {
         try {
-
             //------RECURSIVIDAD--------
             char r = JOptionPane.showInputDialog("Desea editar otro evento?"
                     + "\nSI || NO").toUpperCase().charAt(0);

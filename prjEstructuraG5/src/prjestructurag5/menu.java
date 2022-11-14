@@ -24,9 +24,7 @@ public class menu {
             } else {
                 ini = JOptionPane.showInputDialog("Desea salir:"
                         + "SI || NO").toUpperCase().charAt(0);
-                if (ini == 'S') {
-                    JOptionPane.showMessageDialog(null, "HASTA LUEGO");
-                }
+
             }
         }
 
@@ -73,7 +71,7 @@ public class menu {
                     break;//-----------------------
                 case 'B'://MODULO EVENTOS
                     while (op2 != 'S') {
-                        op2=JOptionPane.showInputDialog("SELECCIONE LA OPCION:"
+                        op2 = JOptionPane.showInputDialog("SELECCIONE LA OPCION:"
                                 + "\nA. AGREGAR EVENTO"
                                 + "\nB. MOSTRAR EVENTOS"
                                 + "\nC. EDITAR EVENTO"
