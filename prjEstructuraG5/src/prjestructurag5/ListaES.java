@@ -1,5 +1,8 @@
 package prjestructurag5;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.Random;
 import javax.swing.JOptionPane;
 
@@ -627,7 +630,7 @@ public class ListaES {
     //----------------------------METODOS MODULO 3---------------------------------
     public void agregarVenta() {
         try {
-            if (!VaciasLista()) {
+            if (!VaciasLista() && !vaciaLDC()) {
                 dVenta v = new dVenta();
                 String nombC = "";
 
@@ -641,7 +644,13 @@ public class ListaES {
                     codCompra = Integer.parseInt(JOptionPane.showInputDialog("Digite un codigo de compra: #####"));
                 }
                 v.setCodCompra(codCompra);
-                
+
+                String timeStamp1 = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+                v.setHoraCompra(timeStamp1);
+
+                String timeStamp2 = new SimpleDateFormat("dd/MM/YY").format(Calendar.getInstance().getTime());
+                v.setFechaCompra(timeStamp2);
+
                 NodoA nuevo = new NodoA();
                 nuevo.setElemento(v);
                 if (vaciaArbol()) {
@@ -687,6 +696,8 @@ public class ListaES {
             mostrarNodo(raiz.getEnlaIzq());
             System.out.print(raiz.getElemento().getCodCompra());
             System.out.print(raiz.getElemento().getNombreComprador());
+            System.out.println(raiz.getElemento().getHoraCompra());
+            System.out.println(raiz.getElemento().getFechaCompra());
             mostrarNodo(raiz.getEnlaceDer());
 
         }
