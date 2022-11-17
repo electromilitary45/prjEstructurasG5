@@ -1,5 +1,6 @@
 package prjestructurag5;
 
+import java.util.Random;
 import javax.swing.JOptionPane;
 
 public class ListaES {
@@ -9,12 +10,18 @@ public class ListaES {
     //----ATRIBUTOS MODULO 2-------
     private NodoSC inicioSC;
     private NodoSC finSC;
+    private NodoLDC inicioLDC;
+    private NodoLDC finLDC;
+    //--atributos modulo3--------
+    private NodoA raiz;
 
     //------CONSTRUCTOR--------
     public ListaES() {
         this.inicio = null;//EnlazadaSimple
         this.inicioSC = null;//SimpleCircular
         this.finSC = null;//simpleCircular
+        this.inicioLDC = null;
+        this.finLDC = null;
     }
 
     //------METODOS GENERALES-----
@@ -24,7 +31,7 @@ public class ListaES {
         } else {
             return false;
         }
-    }//fin VaciaES()
+    }//fin VaciaEnlazadaSimple()
 
     public boolean vaciaSC() {
         if (inicioSC == null) {
@@ -34,7 +41,23 @@ public class ListaES {
         }
     }//fin vaciaSC
 
-    //-----------------------------METODOS MODULO 1---------------------------------
+    public boolean vaciaLDC() {
+        if (inicioLDC == null) {
+            return true;
+        } else {
+            return false;
+        }
+    }//fin vaciaLDC
+
+    public boolean vaciaArbol() {
+        if (raiz == null) {
+            return true;
+        } else {
+            return false;
+        }
+    }//fin vaciaArbol
+
+    //-----------------------------METODOS MODULO 1----enlazada simple-----------------------------
     public void agregarUsuario() {
         //--instacia
         Dato d = new Dato();
@@ -154,8 +177,26 @@ public class ListaES {
         }
     }
 
+    public boolean encUsuario(String nombC) {
+        boolean enc = false;
+        if (!VaciasLista()) {
+
+            Nodo aux = inicio;
+            while (aux != null) {
+                if (aux.getElemento().getUsuario().equals(nombC)) {
+                    enc = true;
+                }
+                aux = aux.getSiguiente();
+            }
+            return enc;
+        } else {
+            JOptionPane.showMessageDialog(null, "No hay usuarios registrados, no se puede mostrar");
+        }
+        return enc;
+    }
+
     //-----------------------------METODOS MODULO 2---------------------------------
-    //Inicio de modulo agregar evento
+    //--PARTE EVENTOS
     public void agregarEvento() {
         try {
             dEventosSC DE = new dEventosSC();
@@ -463,6 +504,193 @@ public class ListaES {
         }
 
     }//fin inactivarEvvento(){}
+
+    //--PARTE ASIESTO
+    public void agregarAsientos() {
+
+        try {
+            dAsientos a = new dAsientos();
+
+            int cantA = 0;
+            while (cantA <= 0) {
+                cantA = Integer.parseInt(JOptionPane.showInputDialog("Digite la cantidad de asientos: 'Cada asiente cuesta 1000colones'"));
+            }
+            a.setCantAsientos(cantA);
+
+            String codAr = "";
+            while (!codAr.equals("PRE") && !codAr.equals("NOR")) {
+                codAr = JOptionPane.showInputDialog("Digite el codigo de area ('PRE' o 'NOR')");
+            }
+            a.setCodArea(codAr);
+
+            a.setCostoVenta(cantA * 1000);
+
+            Random claseRandom = new Random();
+            int randomInt = 1000 + claseRandom.nextInt(999999 - 1000);
+
+            a.setCodCompra(randomInt);
+
+            a.setStatus(true);
+
+            NodoLDC nuevo = new NodoLDC();
+            nuevo.setElemento(a);
+
+            if (vaciaLDC()) {
+                inicioLDC = nuevo;
+                finLDC = nuevo;
+                finLDC.setSiguiente(inicioLDC);
+                inicioLDC.setAnterior(finLDC);
+            } else if (a.getCodCompra() < inicioLDC.getElemento().getCodCompra()) {
+                nuevo.setSiguiente(inicioLDC);
+                inicioLDC = nuevo;
+                finLDC.setSiguiente(inicioLDC);
+                inicioLDC.setAnterior(finLDC);
+            } else if (a.getCodCompra() >= finLDC.getElemento().getCodCompra()) {
+                finLDC.setSiguiente(nuevo);
+                finLDC = nuevo;   //fin=fin.getSiguiente;
+                finLDC.setSiguiente(inicioLDC);
+                inicioLDC.setAnterior(finLDC);
+            } else {
+                NodoLDC aux = inicioLDC;
+                while (aux.getSiguiente().getElemento().getCodCompra() < a.getCodCompra()) {
+                    aux = aux.getSiguiente();
+                }
+                nuevo.setSiguiente(aux.getSiguiente());
+                nuevo.setAnterior(aux);
+                aux.setSiguiente(nuevo);
+                nuevo.getSiguiente().setAnterior(nuevo);
+            }
+            JOptionPane.showMessageDialog(null, "EXITO AL REGISTRAR\nSu codigo de compra es:  " + a.getCodCompra());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "HUBO UN ERROR\nIntente nuevamente");
+        }
+
+    }
+
+    public void mostrarAsientos() {
+        try {
+            if (!vaciaLDC()) {
+                String s = "";
+                String st = "";
+                NodoLDC aux = inicioLDC;
+                if (aux.getElemento().isStatus() == true) {
+                    st = "OCU";
+                } else {
+                    st = "LIB";
+                }
+                s = s + aux.getElemento().getCodCompra() + " -- " + aux.getElemento().getCodArea() + " -- " + aux.getElemento().getCantAsientos() + " -- " + aux.getElemento().getCostoVenta() + "-- " + st + "<=>";
+                aux = aux.getSiguiente();
+                while (aux != inicioLDC) {
+                    if (aux.getElemento().isStatus() == true) {
+                        st = "OCU";
+                    } else {
+                        st = "LIB";
+                    }
+                    s = s + aux.getElemento().getCodCompra() + " -- " + aux.getElemento().getCodArea() + " -- " + aux.getElemento().getCantAsientos() + " -- " + aux.getElemento().getCostoVenta() + "-- " + st + "<=>";
+                    aux = aux.getSiguiente();
+                }
+                JOptionPane.showMessageDialog(null, s);
+            } else {
+                JOptionPane.showMessageDialog(null, "NO HAY DATOS");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "HUBO UN ERROR AL MOSTRAR DATOS");
+        }
+    }
+
+    public boolean encCodCompra(int codCompra) {
+        boolean enc = false;
+        try {
+            if (!vaciaLDC()) {
+
+                NodoLDC aux = inicioLDC;
+                if (aux.getElemento().getCodCompra() == codCompra) {
+                    enc = true;
+                }
+                aux = aux.getSiguiente();
+                while (aux != inicioLDC) {
+                    if (aux.getElemento().getCodCompra() == codCompra) {
+                        enc = true;
+                    }
+                    aux = aux.getSiguiente();
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "NO HAY DATOS");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "HUBO UN ERROR AL MOSTRAR DATOS");
+        }
+        return enc;
+    }//fin encCodCompra
+
+    //----------------------------METODOS MODULO 3---------------------------------
+    public void agregarVenta() {
+        try {
+            if (!VaciasLista()) {
+                dVenta v = new dVenta();
+                String nombC = "";
+
+                while (nombC.equals("") && encUsuario(nombC) == false) {
+                    nombC = JOptionPane.showInputDialog("Digite un nombre de usuario: ");
+                }
+                v.setNombreComprador(nombC);
+
+                int codCompra = 0;
+                while (encCodCompra(codCompra) == false) {
+                    codCompra = Integer.parseInt(JOptionPane.showInputDialog("Digite un codigo de compra: #####"));
+                }
+                v.setCodCompra(codCompra);
+                
+                NodoA nuevo = new NodoA();
+                nuevo.setElemento(v);
+                if (vaciaArbol()) {
+                    raiz = nuevo;
+                } else {
+                    insertarNuevo(raiz, nuevo);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "DEBEN EXISTIR USUARIOS Y ASIENTEOS");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "HUBO UN ERROR");
+        }
+
+    }//fin agregarventa
+
+    public void insertarNuevo(NodoA raiz, NodoA nuevo) {
+        if (nuevo.getElemento().getCodCompra() <= raiz.getElemento().getCodCompra()) {
+            if (raiz.getEnlaIzq() == null) {
+                raiz.setEnlaIzq(nuevo);
+            } else {
+                insertarNuevo(raiz.getEnlaIzq(), nuevo);
+            }
+        } else {
+            if (raiz.getEnlaceDer() == null) {
+                raiz.setEnlaceDer(nuevo);
+            } else {
+                insertarNuevo(raiz.getEnlaceDer(), nuevo);
+            }
+        }
+    }
+
+    public void mostrarRaiz() {
+        if (!vaciaArbol()) {
+            mostrarNodo(raiz);
+        } else {
+            JOptionPane.showMessageDialog(null, "¡No se puede mostrar, árbol vacío!");
+        }
+    }//fin mostrar raiz
+
+    public void mostrarNodo(NodoA raiz) {
+        if (raiz != null) {
+            mostrarNodo(raiz.getEnlaIzq());
+            System.out.print(raiz.getElemento().getCodCompra());
+            System.out.print(raiz.getElemento().getNombreComprador());
+            mostrarNodo(raiz.getEnlaceDer());
+
+        }
+    }//fin mostrarNodo
 
 }//fin clase LISTAES(){}
 

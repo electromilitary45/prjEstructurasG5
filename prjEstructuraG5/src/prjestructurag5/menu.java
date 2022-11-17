@@ -21,11 +21,11 @@ public class menu {
             if (user.equals("admin") && pass.equals("admin")) {
                 JOptionPane.showMessageDialog(null, "BIENVENIDO USUARIO ADMINISTRADOR");
                 menuP();
-            } else {
-                ini = JOptionPane.showInputDialog("Desea salir:"
-                        + "SI || NO").toUpperCase().charAt(0);
-
             }
+
+            ini = JOptionPane.showInputDialog("Desea salir:"
+                    + "SI || NO").toUpperCase().charAt(0);
+
         }
 
     }//fin inicioSesion(){}
@@ -39,7 +39,7 @@ public class menu {
             ListaES LES = new ListaES();
             char op2 = ' ';
             op1 = JOptionPane.showInputDialog("A. MODULO 1 (USUARIOS)"
-                    + "\nB. MODULO 2 (EVENTOS)"
+                    + "\nB. MODULO 2 (EVENTOS Y ASIENTOS)"
                     + "\nC. MODULO 3 (VENTAS)"
                     + "\nD. MODULO 4 (CAJAS)"
                     + "\nS. SALIR").toUpperCase().charAt(0);
@@ -76,6 +76,8 @@ public class menu {
                                 + "\nB. MOSTRAR EVENTOS"
                                 + "\nC. EDITAR EVENTO"
                                 + "\nD. INACTIVAR EVENTO"
+                                + "\nE. AGREGAR ASIENTOS"
+                                + "\nF. MOSTRAR ASIENTOS"
                                 + "\nS. SALIR").toUpperCase().charAt(0);
                         switch (op2) {
                             case 'A':
@@ -90,6 +92,12 @@ public class menu {
                             case 'D':
                                 LES.inactivarEvento();
                                 break;
+                            case 'E':
+                                LES.agregarAsientos();
+                                break;
+                            case 'F':
+                                LES.mostrarAsientos();
+                                break;
                             case 'S':
                                 break;
                             default:
@@ -98,6 +106,26 @@ public class menu {
                     }
                     break;//-----------------------
                 case 'C'://MODULO VENTAS
+                    while (op2 != 'S') {
+                        op2 = JOptionPane.showInputDialog("SELECCIONE LA OPCION:"
+                                + "\nA. AGREGAR VENTA"
+                                + "\nB. MOSTRAR VENTA"
+                                + "\nS. SALIR").toUpperCase().charAt(0);
+
+                        switch (op2) {
+                            case 'A':
+                                LES.agregarVenta();
+                                break;
+                            case 'B':
+                                LES.mostrarRaiz();
+                                break;
+                            case 'S':
+                                break;
+                            default:
+                                JOptionPane.showMessageDialog(null, "OPCION INVALIDA");
+                        }
+                    }
+
                     break;//-----------------------
                 case 'D'://MODULO CAJAS
                     break;//-----------------------
