@@ -513,7 +513,7 @@ public class ListaES {
 
             int cantA = 0;
             while (cantA <= 0) {
-                cantA = Integer.parseInt(JOptionPane.showInputDialog("Digite la cantidad de asientos: 'Cada asiente cuesta 1000colones'"));
+                cantA = Integer.parseInt(JOptionPane.showInputDialog("Digite la cantidad de asientos: 'Cada asiento cuesta ₡1000'"));
             }
             a.setCantAsientos(cantA);
 
@@ -650,7 +650,7 @@ public class ListaES {
                     insertarNuevo(raiz, nuevo);
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "DEBEN EXISTIR USUARIOS Y ASIENTEOS");
+                JOptionPane.showMessageDialog(null, "DEBEN EXISTIR USUARIOS Y ASIENTOS");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "HUBO UN ERROR");
