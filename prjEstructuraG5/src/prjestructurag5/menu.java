@@ -128,6 +128,25 @@ public class menu {
 
                     break;//-----------------------
                 case 'D'://MODULO CAJAS
+                    while (op2 != 'S') {
+                        op2 = JOptionPane.showInputDialog("SELECCION LA OPCION:"
+                                + "\nA. CONTAR INGRESOS"
+                                + "\nB. MOSTRAR INGRESOS"
+                                + "\nS. SALIR").toUpperCase().charAt(0);
+                        switch (op2) {
+                            case 'A':
+                                LES.Ingreso();
+                                break;
+                            case 'B':
+                                LES.mostrarIngresos();
+                                break;
+                            case 'S':
+                                break;
+                            default:
+                                JOptionPane.showMessageDialog(null, "OPCION INVALIDA");
+                        }
+                    }
+
                     break;//-----------------------
                 case 'S'://SALIR
                     inicioSesion();

@@ -17,6 +17,8 @@ public class ListaES {
     private NodoLDC finLDC;
     //--atributos modulo3--------
     private NodoA raiz;
+    //--atributos modulo4--------
+    private NodoP cima;
 
     //------CONSTRUCTOR--------
     public ListaES() {
@@ -25,6 +27,7 @@ public class ListaES {
         this.finSC = null;//simpleCircular
         this.inicioLDC = null;
         this.finLDC = null;
+        this.cima = null;
     }
 
     //------METODOS GENERALES-----
@@ -59,6 +62,14 @@ public class ListaES {
             return false;
         }
     }//fin vaciaArbol
+
+    public boolean vaciaPila() {
+        if (cima == null) {
+            return true;
+        } else {
+            return false;
+        }
+    }//fin vaciaCima
 
     //-----------------------------METODOS MODULO 1----enlazada simple-----------------------------
     public void agregarUsuario() {
@@ -627,6 +638,48 @@ public class ListaES {
         return enc;
     }//fin encCodCompra
 
+    public int contarIngresos() {
+        int num = 0;
+        try {
+            if (!vaciaLDC()) {
+                NodoLDC aux = inicioLDC;
+                num += aux.getElemento().getCostoVenta();
+                aux = aux.getSiguiente();
+                while (aux != inicioLDC) {
+                    num += aux.getElemento().getCostoVenta();
+                    aux = aux.getSiguiente();
+
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "NO HAY DATOS");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "HUBO UN ERROR AL MOSTRAR DATOS");
+        }
+        return num;
+    }//fin metodo de contador ingresos
+
+    //Inicio de metodo de contar personas
+    public int contarPersonas() {
+        int num = 0;
+        try {
+            if (!vaciaLDC()) {
+                NodoLDC aux = inicioLDC;
+                num++;
+                aux = aux.getSiguiente();
+                while (aux != inicioLDC) {
+                    num++;
+                    aux = aux.getSiguiente();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "NO HAY DATOS");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "HUBO UN ERROR AL MOSTRAR DATOS");
+        }
+        return num;
+    }//fin metodo de contador personas
+
     //----------------------------METODOS MODULO 3---------------------------------
     public void agregarVenta() {
         try {
@@ -702,6 +755,55 @@ public class ListaES {
 
         }
     }//fin mostrarNodo
+
+    //-----------------------------------MODULO#4---------------------------------
+    //Inicio metodo agregar
+    public void Ingreso() {
+        try {
+            if (!vaciaLDC()) {
+                dIngresos dI = new dIngresos();
+                dI.setPlataIngresos(contarIngresos());
+                dI.setIngresosDia(contarPersonas());
+                String timeStamp2 = new SimpleDateFormat("dd/MM/YY").format(Calendar.getInstance().getTime());
+                dI.setFecha(timeStamp2);
+                NodoP nuevo = new NodoP();
+                nuevo.setElemento(dI);
+                if (vaciaPila()) {
+                    cima = nuevo;
+                } else {
+                    nuevo.setSiguiente(cima);
+                    cima = nuevo;
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No es posible calcular ingreso");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "HUBO UN ERROR");
+        }
+
+    }
+
+    //Inicio metodo mostrar ingresos
+    public void mostrarIngresos() {
+        try {
+            if (!vaciaPila()) {
+                String s = "";
+                NodoP aux = cima;              
+                while (aux != cima) {
+                    s = s + aux.getElemento().getFecha() + "\n" + aux.getElemento().getIngresosDia() + "\n" + aux.getElemento().getPlataIngresos() + "\n---------------\n";
+                   aux = aux.getSiguiente();
+                }
+                JOptionPane.showMessageDialog(null, "Recuentos\n"+s);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "No se puede mostrar ingresos");
+
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "HUBO UN ERROR");
+        }
+
+    }//fin metodo de mostrar ingresos
 
 }//fin clase LISTAES(){}
 
