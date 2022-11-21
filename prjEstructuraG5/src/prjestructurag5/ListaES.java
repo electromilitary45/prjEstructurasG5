@@ -77,9 +77,8 @@ public class ListaES {
         Dato d = new Dato();
         //--
         d.setNombre(JOptionPane.showInputDialog("DIGITE UN NOMBRE"));
-        d.setUsuario(JOptionPane.showInputDialog("DIGITE UN NOMBRE DE USUARIO:"));
-
         d.setApellido(JOptionPane.showInputDialog("DIGITE UN APELLIDO:"));
+        d.setUsuario(JOptionPane.showInputDialog("DIGITE UN NOMBRE DE USUARIO:"));
         d.setContrasena(JOptionPane.showInputDialog("DIGITE UNA CONTRASEÑA:"));
         d.setEstado(true);
 
@@ -788,12 +787,12 @@ public class ListaES {
         try {
             if (!vaciaPila()) {
                 String s = "";
-                NodoP aux = cima;              
+                NodoP aux = cima;
                 while (aux != cima) {
                     s = s + aux.getElemento().getFecha() + "\n" + aux.getElemento().getIngresosDia() + "\n" + aux.getElemento().getPlataIngresos() + "\n---------------\n";
-                   aux = aux.getSiguiente();
+                    aux = aux.getSiguiente();
                 }
-                JOptionPane.showMessageDialog(null, "Recuentos\n"+s);
+                JOptionPane.showMessageDialog(null, "Recuentos\n" + s);
 
             } else {
                 JOptionPane.showMessageDialog(null, "No se puede mostrar ingresos");

@@ -15,6 +15,7 @@ public class menu {
     public void inicioSesion() {
         char ini = ' ';
         while (ini != 'S') {
+         
             String user = JOptionPane.showInputDialog("Digite un usuario: (admin)");
             String pass = JOptionPane.showInputDialog("Digite un contraseña: (admin)");
 
@@ -151,6 +152,80 @@ public class menu {
                 case 'S'://SALIR
                     inicioSesion();
                     break;//-----------------------
+                default:
+                    JOptionPane.showMessageDialog(null, "OPCION INVALIDA");
+            }
+        }
+    }//fin menuP(){}
+
+    public void menuP2() {
+        char op1 = ' ';
+        while (op1 != 'S') {
+            ListaES LES = new ListaES();
+            op1 = JOptionPane.showInputDialog("DIGITE LA OPCION"
+                    + "\n----MODULO 1 (USUARIOS)----"
+                    + "\nA. REGISTRO USUARIOS"
+                    + "\nB. DESACTIVAR USUARIOS"
+                    + "\nC. MOSTRAR USUARIOS"
+                    + "\n----MODULO 2 (EVENTOS Y ASIENTOS)----"
+                    + "\nD. AGREGAR EVENTO"
+                    + "\nE. MOSTRAR EVENTOS"
+                    + "\nF. EDITAR EVENTO"
+                    + "\nG. INACTIVAR EVENTO"
+                    + "\nH. AGREGAR ASIENTOS"
+                    + "\nI. MOSTRAR ASIENTOS"
+                    + "\n----MODULO 3 (ASIENTOS)----"
+                    + "\nJ. AGREGAR VENTA"
+                    + "\nK. MOSTRAR VENTA"
+                    + "\n----MODULO 4 (CAJAS)----"
+                    + "\nL. CONTAR INGRESOS"
+                    + "\nM. MOSTRAR INGRESOS").toUpperCase().charAt(0);
+
+            switch (op1) {
+                case 'A':
+                    LES.agregarUsuario();
+                    break;
+                case 'B':
+                    LES.desactivarUsuario();
+                    break;
+                case 'C':
+                    LES.mostrarUsuarios();
+                    break;
+                case 'D':
+                    LES.agregarEvento();
+                    break;
+                case 'E':
+                    LES.mostrarEvento();
+                    break;
+                case 'F':
+                    LES.editarEvento();
+                    break;
+                case 'G':
+                    LES.inactivarEvento();
+                    break;
+                case 'H':
+                    LES.agregarAsientos();
+                    break;
+                //---MODULO3
+                case 'I':
+                    LES.mostrarAsientos();
+                    break;
+                case 'J':
+                    LES.agregarVenta();
+                    break;
+                case 'K':
+                    LES.mostrarRaiz();
+                    break;
+                case 'L':
+                    LES.Ingreso();
+                    break;
+
+                case 'M':
+                    LES.mostrarIngresos();
+                    break;
+                case 'S':
+                    inicioSesion();
+                    break;
                 default:
                     JOptionPane.showMessageDialog(null, "OPCION INVALIDA");
             }

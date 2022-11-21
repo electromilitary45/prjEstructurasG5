@@ -14,6 +14,4 @@ public class Main {
         new menu().inicioSesion();
     }
 
-    
-    
 }
