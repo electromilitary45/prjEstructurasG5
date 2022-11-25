@@ -1,5 +1,12 @@
 package prjestructurag5;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.EOFException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Calendar;
@@ -19,6 +26,10 @@ public class ListaES {
     private NodoA raiz;
     //--atributos modulo4--------
     private NodoP cima;
+
+    //---vectores--
+    private static String nomUsurs[] = new String[999];
+    private static int codsCompra[] = new int[999];
 
     //------CONSTRUCTOR--------
     public ListaES() {
@@ -73,34 +84,46 @@ public class ListaES {
 
     //-----------------------------METODOS MODULO 1----enlazada simple-----------------------------
     public void agregarUsuario() {
-        //--instacia
-        Dato d = new Dato();
-        //--
-        d.setNombre(JOptionPane.showInputDialog("DIGITE UN NOMBRE"));
-        d.setApellido(JOptionPane.showInputDialog("DIGITE UN APELLIDO:"));
-        d.setUsuario(JOptionPane.showInputDialog("DIGITE UN NOMBRE DE USUARIO:"));
-        d.setContrasena(JOptionPane.showInputDialog("DIGITE UNA CONTRASEÑA:"));
-        d.setEstado(true);
+        try {
+            //--instacia
+            Dato d = new Dato();
+            DataOutputStream salida = new DataOutputStream(new FileOutputStream("usuarios.dat", true));
+            //--datos para lista
+            d.setNombre(JOptionPane.showInputDialog("DIGITE UN NOMBRE"));
+            d.setApellido(JOptionPane.showInputDialog("DIGITE UN APELLIDO:"));
+            d.setUsuario(JOptionPane.showInputDialog("DIGITE UN NOMBRE DE USUARIO:"));
+            d.setContrasena(JOptionPane.showInputDialog("DIGITE UNA CONTRASEÑA:"));
+            d.setEstado(true);
+            //--datos para archivo
 
-        Nodo nuevo = new Nodo();
-        nuevo.setElemento(d);
+            salida.writeUTF(d.getUsuario());
+            salida.close();
 
-        if (VaciasLista()) {//se pone al inicio
-            inicio = nuevo;
-        } else if (d.getNombre().compareTo(inicio.getElemento().getNombre()) < 0) { // se pone a la derecha
-            nuevo.setSiguiente(inicio);
-            inicio = nuevo;
-        } else if (inicio.getSiguiente() == null) {//se pone a la izquierda 
-            inicio.setSiguiente(nuevo);
-        } else {//se pone en medio
-            Nodo aux = inicio;
-            while ((aux.getSiguiente() != null) && (aux.getSiguiente().getElemento().getUsuario().
-                    compareTo(d.getUsuario()) < 0)) {
-                aux = aux.getSiguiente();
+            Nodo nuevo = new Nodo();
+            nuevo.setElemento(d);
+
+            if (VaciasLista()) {//se pone al inicio
+                inicio = nuevo;
+            } else if (d.getNombre().compareTo(inicio.getElemento().getNombre()) < 0) { // se pone a la derecha
+                nuevo.setSiguiente(inicio);
+                inicio = nuevo;
+            } else if (inicio.getSiguiente() == null) {//se pone a la izquierda 
+                inicio.setSiguiente(nuevo);
+            } else {//se pone en medio
+                Nodo aux = inicio;
+                while ((aux.getSiguiente() != null) && (aux.getSiguiente().getElemento().getUsuario().
+                        compareTo(d.getUsuario()) < 0)) {
+                    aux = aux.getSiguiente();
+                }
+                nuevo.setSiguiente(aux.getSiguiente());
+                aux.setSiguiente(nuevo);
             }
-            nuevo.setSiguiente(aux.getSiguiente());
-            aux.setSiguiente(nuevo);
+        } catch (IOException ex01) {
+            JOptionPane.showMessageDialog(null, "ERROR AL GUARDAR");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
+
     }//fin agregarUsuario
 
     public void eliminarUsuario() {
@@ -191,21 +214,40 @@ public class ListaES {
     }
 
     public boolean encUsuario(String nombC) {
+        llenarVecUsur();
         boolean enc = false;
-        if (!VaciasLista()) {
 
-            Nodo aux = inicio;
-            while (aux != null) {
-                if (aux.getElemento().getUsuario().equals(nombC)) {
-                    enc = true;
-                }
-                aux = aux.getSiguiente();
+        for (int i = 0; i < nomUsurs.length; i++) {
+            if (nomUsurs.equals(nomUsurs[i])) {
+                enc = true;
             }
-            return enc;
-        } else {
-            JOptionPane.showMessageDialog(null, "No hay usuarios registrados, no se puede mostrar");
         }
         return enc;
+
+    }
+
+    public void llenarVecUsur() {
+        int con = 0;
+        try {
+            DataInputStream entrada = new DataInputStream(new FileInputStream("usuarios.dat"));
+            try {
+                Dato d = new Dato();
+
+                while (true) {
+                    d.setUsuario(entrada.readUTF());
+                    nomUsurs[con] = d.getApellido();
+                    con++;
+                }
+
+            } catch (EOFException eef) {
+                entrada.close();
+            }
+        } catch (FileNotFoundException fnfe) {
+            JOptionPane.showMessageDialog(null, "Archivo no encontrado");
+        } catch (IOException ei) {
+            JOptionPane.showMessageDialog(null, "ERROR DE DISPOSITIVO");
+        }
+        //----mensajes--
     }
 
     //-----------------------------METODOS MODULO 2---------------------------------
@@ -535,13 +577,19 @@ public class ListaES {
                 codAr = JOptionPane.showInputDialog("Digite el codigo de area ('PRE' o 'NOR')");
             }
             a.setCodArea(codAr);
-
+            //--costos archivo
+            DataOutputStream salida = new DataOutputStream(new FileOutputStream("costosVenta.dat", true));
             a.setCostoVenta(cantA * 1000);
+            salida.writeDouble(a.getCostoVenta());
+            salida.close();
 
+            //--codCompra Archivo
             Random claseRandom = new Random();
             int randomInt = 1000 + claseRandom.nextInt(999999 - 1000);
-
+            DataOutputStream salida2 = new DataOutputStream(new FileOutputStream("codigosCompra.dat", true));
             a.setCodCompra(randomInt);
+            salida2.writeInt(a.getCodCompra());
+            salida2.close();
 
             a.setStatus(true);
 
@@ -612,107 +660,124 @@ public class ListaES {
     }
 
     public boolean encCodCompra(int codCompra) {
+        llenarVecCodCompra();
         boolean enc = false;
-        try {
-            if (!vaciaLDC()) {
 
-                NodoLDC aux = inicioLDC;
-                if (aux.getElemento().getCodCompra() == codCompra) {
-                    enc = true;
-                }
-                aux = aux.getSiguiente();
-                while (aux != inicioLDC) {
-                    if (aux.getElemento().getCodCompra() == codCompra) {
-                        enc = true;
-                    }
-                    aux = aux.getSiguiente();
-                }
-
-            } else {
-                JOptionPane.showMessageDialog(null, "NO HAY DATOS");
+        for (int i = 0; i < codsCompra.length; i++) {
+            if (codCompra == codsCompra[i]) {
+                enc = true;
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "HUBO UN ERROR AL MOSTRAR DATOS");
         }
         return enc;
     }//fin encCodCompra
 
-    public int contarIngresos() {
-        int num = 0;
+    public double contarIngresos() {
+        double num = 0;
         try {
-            if (!vaciaLDC()) {
-                NodoLDC aux = inicioLDC;
-                num += aux.getElemento().getCostoVenta();
-                aux = aux.getSiguiente();
-                while (aux != inicioLDC) {
-                    num += aux.getElemento().getCostoVenta();
-                    aux = aux.getSiguiente();
+            DataInputStream entrada = new DataInputStream(new FileInputStream("costosVenta.dat"));
+            try {
+                dAsientos a = new dAsientos();
 
+                while (true) {
+                    a.setCostoVenta(entrada.readDouble());
+                    num += a.getCostoVenta();
                 }
-            } else {
-                JOptionPane.showMessageDialog(null, "NO HAY DATOS");
+
+            } catch (EOFException eef) {
+                entrada.close();
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "HUBO UN ERROR AL MOSTRAR DATOS");
+        } catch (FileNotFoundException fnfe) {
+            JOptionPane.showMessageDialog(null, "Archivo no encontrado");
+        } catch (IOException ei) {
+            JOptionPane.showMessageDialog(null, "ERROR DE DISPOSITIVO");
         }
+
         return num;
     }//fin metodo de contador ingresos
+
+    public void llenarVecCodCompra() {
+        String s = "";
+        int con = 0;
+        try {
+            DataInputStream entrada = new DataInputStream(new FileInputStream("codigosCompra.dat"));
+            try {
+                dAsientos a = new dAsientos();
+
+                while (true) {
+                    a.setCodCompra(entrada.readInt());
+                    codsCompra[con] = a.getCodCompra();
+                    con++;
+                    s += a.getCodCompra() + "\n";
+                }
+
+            } catch (EOFException eef) {
+                entrada.close();
+            }
+        } catch (FileNotFoundException fnfe) {
+            JOptionPane.showMessageDialog(null, "Archivo no encontrado");
+        } catch (IOException ei) {
+            JOptionPane.showMessageDialog(null, "ERROR DE DISPOSITIVO");
+        }
+        //----mensajes--
+    }
 
     //Inicio de metodo de contar personas
     public int contarPersonas() {
         int num = 0;
         try {
-            if (!vaciaLDC()) {
-                NodoLDC aux = inicioLDC;
-                num++;
-                aux = aux.getSiguiente();
-                while (aux != inicioLDC) {
+            DataInputStream entrada = new DataInputStream(new FileInputStream("usuarios.dat"));
+            try {
+                Dato d = new Dato();
+
+                while (true) {
+                    d.setUsuario(entrada.readUTF());
                     num++;
-                    aux = aux.getSiguiente();
                 }
-            } else {
-                JOptionPane.showMessageDialog(null, "NO HAY DATOS");
+
+            } catch (EOFException eef) {
+                entrada.close();
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "HUBO UN ERROR AL MOSTRAR DATOS");
+        } catch (FileNotFoundException fnfe) {
+            JOptionPane.showMessageDialog(null, "Archivo no encontrado");
+        } catch (IOException ei) {
+            JOptionPane.showMessageDialog(null, "ERROR DE DISPOSITIVO");
         }
+
         return num;
     }//fin metodo de contador personas
 
     //----------------------------METODOS MODULO 3---------------------------------
     public void agregarVenta() {
         try {
-            if (!VaciasLista() && !vaciaLDC()) {
-                dVenta v = new dVenta();
-                String nombC = "";
 
-                while (nombC.equals("") && encUsuario(nombC) == false) {
-                    nombC = JOptionPane.showInputDialog("Digite un nombre de usuario: ");
-                }
-                v.setNombreComprador(nombC);
+            dVenta v = new dVenta();
+            String nombC = "";
 
-                int codCompra = 0;
-                while (encCodCompra(codCompra) == false) {
-                    codCompra = Integer.parseInt(JOptionPane.showInputDialog("Digite un codigo de compra: #####"));
-                }
-                v.setCodCompra(codCompra);
-
-                String timeStamp1 = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
-                v.setHoraCompra(timeStamp1);
-
-                String timeStamp2 = new SimpleDateFormat("dd/MM/YY").format(Calendar.getInstance().getTime());
-                v.setFechaCompra(timeStamp2);
-
-                NodoA nuevo = new NodoA();
-                nuevo.setElemento(v);
-                if (vaciaArbol()) {
-                    raiz = nuevo;
-                } else {
-                    insertarNuevo(raiz, nuevo);
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "DEBEN EXISTIR USUARIOS Y ASIENTOS");
+            while (nombC.equals("") && encUsuario(nombC) == false) {
+                nombC = JOptionPane.showInputDialog("Digite un nombre de usuario: ");
             }
+            v.setNombreComprador(nombC);
+
+            int codCompra = 0;
+            while (encCodCompra(codCompra) == false) {
+                codCompra = Integer.parseInt(JOptionPane.showInputDialog("Digite un codigo de compra: #####\n"));
+            }
+            v.setCodCompra(codCompra);
+
+            String timeStamp1 = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+            v.setHoraCompra(timeStamp1);
+
+            String timeStamp2 = new SimpleDateFormat("dd/MM/YY").format(Calendar.getInstance().getTime());
+            v.setFechaCompra(timeStamp2);
+
+            NodoA nuevo = new NodoA();
+            nuevo.setElemento(v);
+            if (vaciaArbol()) {
+                raiz = nuevo;
+            } else {
+                insertarNuevo(raiz, nuevo);
+            }
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "HUBO UN ERROR");
         }
@@ -758,8 +823,9 @@ public class ListaES {
     //-----------------------------------MODULO#4---------------------------------
     //Inicio metodo agregar
     public void Ingreso() {
-        try {
-            if (!vaciaLDC()) {
+        if (contarIngresos() != 0 && contarPersonas() != 0) {
+            try {
+
                 dIngresos dI = new dIngresos();
                 dI.setPlataIngresos(contarIngresos());
                 dI.setIngresosDia(contarPersonas());
@@ -773,13 +839,13 @@ public class ListaES {
                     nuevo.setSiguiente(cima);
                     cima = nuevo;
                 }
-            } else {
-                JOptionPane.showMessageDialog(null, "No es posible calcular ingreso");
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "HUBO UN ERROR");
-        }
 
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "HUBO UN ERROR");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "NO SE PUEDEN REGISTRAR INGRESOS, no exiten personas");
+        }
     }
 
     //Inicio metodo mostrar ingresos
@@ -788,7 +854,7 @@ public class ListaES {
             if (!vaciaPila()) {
                 String s = "";
                 NodoP aux = cima;
-                while (aux != cima) {
+                while (aux != null) {
                     s = s + aux.getElemento().getFecha() + "\n" + aux.getElemento().getIngresosDia() + "\n" + aux.getElemento().getPlataIngresos() + "\n---------------\n";
                     aux = aux.getSiguiente();
                 }

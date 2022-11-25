@@ -15,7 +15,7 @@ public class menu {
     public void inicioSesion() {
         char ini = ' ';
         while (ini != 'S') {
-         
+
             String user = JOptionPane.showInputDialog("Digite un usuario: (admin)");
             String pass = JOptionPane.showInputDialog("Digite un contraseña: (admin)");
 
