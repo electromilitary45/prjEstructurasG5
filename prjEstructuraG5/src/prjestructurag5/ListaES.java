@@ -36,9 +36,10 @@ public class ListaES {
         this.inicio = null;//EnlazadaSimple
         this.inicioSC = null;//SimpleCircular
         this.finSC = null;//simpleCircular
-        this.inicioLDC = null;
+        this.inicioLDC = null;//doble circular
         this.finLDC = null;
-        this.cima = null;
+        this.cima = null;//pila
+        this.raiz=null;
     }
 
     //------METODOS GENERALES-----
@@ -235,7 +236,7 @@ public class ListaES {
 
                 while (true) {
                     d.setUsuario(entrada.readUTF());
-                    nomUsurs[con] = d.getApellido();
+                    nomUsurs[con] = d.getUsuario();
                     con++;
                 }
 
