@@ -39,7 +39,7 @@ public class ListaES {
         this.inicioLDC = null;//doble circular
         this.finLDC = null;
         this.cima = null;//pila
-        this.raiz=null;
+        this.raiz = null;
     }
 
     //------METODOS GENERALES-----
@@ -335,8 +335,7 @@ public class ListaES {
         if (!vaciaSC()) {
             String s = "";
             NodoSC aux = inicioSC;
-            s = s + aux.getDato().getNombre() + "--" + aux.getDato().getFecha()
-                    + "--" + aux.getDato().getCiudad() + aux.getDato().getLugar() + "--" + aux.getDato().getDireccion() + "--" + aux.getDato().isStatus() + "-->";
+            s = s + aux.getDato().getNombre() + "--" + aux.getDato().getFecha() + "--" + aux.getDato().getCiudad() + aux.getDato().getLugar() + "--" + aux.getDato().getDireccion() + "--" + aux.getDato().isStatus() + "-->";
             aux = aux.getSiguiente();
             while (aux != inicioSC) {
                 s = s + aux.getDato().getNombre() + "--" + aux.getDato().getFecha()
